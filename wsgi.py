@@ -27,13 +27,14 @@ migrate = Migrate(app, db)
 @app.route('/hello', methods=['GET'])
 def hello():
     return "Hello World! SQL", 200
+
 @app.route(f'{BASE_URL}/products', methods=['GET'])
 def get_many_product():
     products = db.session.query(Product).all() # SQLAlchemy request => 'SELECT * FROM products'
     return many_product_schema.jsonify(products), 200
 
 @app.route(f'{BASE_URL}/products/<int:product>', methods=['GET'])
-def get_id_product(id):
-    product = db.session.query(Product).get(id) # READ : Le point de terminaison pour lister un seul produit à partir de son id.
+def get_id_product(id_p):
+    product = db.session.query(Product).get(id_p) # READ : Le point de terminaison pour lister un seul produit à partir de son id.
     #return one_product_schema.jsonify(product), 200
     return product.name, 200
